@@ -1,1 +1,1 @@
-sumarUno numero = numero + 1
+sumarUno numero = numero + 3
