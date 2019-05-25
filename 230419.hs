@@ -75,10 +75,34 @@ cantCyV :: String -> (String,(Int,Int))
 cantCyV comida = (comida,foldr contarLetras (0,0) comida)
 
 contarLetras :: Char -> (Int,Int) -> (Int,Int)
-contarLetras letra (c,v)    | elem letra ['a','e','i','o','u'] = (c,v+1)
-                            | letra == ' ' = (c,v)
+contarLetras letra (c,v)    |elem letra ['a','e','i','o','u'] = (c,v+1)
+                            |letra == ' ' = (c,v)
                             |otherwise = (c+1,v)
 
 masConsonantes :: (String,(Int,Int)) -> Bool
 masConsonantes (_,(c,v)) = c >= v
+
+--5.b
+
+data Persona = Persona {
+    nombreP::String,
+    lugar::String,
+    fechaN::(Int,Int,Int)
+} deriving Show
+
+f2 :: [Persona] -> [(String,Int)]
+f2 personas = filter esMenorDeEdad (map nombreYEdad personas)
+
+nombreYEdad :: Persona -> (String,Int)
+nombreYEdad persona = (nombreP persona,(\(d,m,a) -> 2019 - a) (fechaN persona))
+
+esMenorDeEdad :: (String,Int) -> Bool
+esMenorDeEdad (_,edad) = edad < 18
+
+pruebap = [Persona "Luis" "Cordoba" (20,2,2005),Persona "Pedro" "Rosario" (5,5,1940),Persona "Marta" "Mendoza" (12,10,2003)]
+
+--5.c
+
+f3 :: [a] -> (a->b) -> (b->Bool) -> [b]
+f3 lista mapeo filtro = filter filtro (map mapeo lista)
 
